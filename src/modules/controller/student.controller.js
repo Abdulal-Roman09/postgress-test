@@ -2,20 +2,18 @@ import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { Student } from "../model/student.model.js";
 
-export const createStudent = catchAsync(async (req, res) => {
+export const createStudentIntoDB = catchAsync(async (req, res) => {
+
   const { name, email, age, roll } = req.body;
 
   // Simple validation
   if (!name || !email || !roll) {
-    return sendResponse(res, {
-      success: false,
-      message: "Name, email, and roll are required",
-      statusCode: 400,
-      data: null,
-    });
+
+    throw new Error("data is not provided")
   }
 
   // Create student (using your model method)
+
   const student = await Student.createStudent({ name, email, age, roll });
 
   // Send response
@@ -28,5 +26,5 @@ export const createStudent = catchAsync(async (req, res) => {
 });
 
 export const StudentController = {
-  createStudent,
+  createStudentIntoDB
 };

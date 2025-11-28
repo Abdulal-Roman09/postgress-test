@@ -1,4 +1,4 @@
-import connectiondb from "../../db/dbConnection.js";
+import dbClient from "../../db/dbConnection.js";
 
 const createStudent = async ({ name, email, age, roll }) => {
   const query = `
@@ -7,7 +7,7 @@ const createStudent = async ({ name, email, age, roll }) => {
     RETURNING *;
   `;
   const values = [name, email, age || null, roll || null];
-  const { rows } = await connectiondb.query(query, values);
+  const { rows } = await dbClient.query(query, values);
   return rows[0];
 };
 

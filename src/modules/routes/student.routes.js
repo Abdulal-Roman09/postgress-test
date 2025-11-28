@@ -3,8 +3,7 @@ import { StudentController } from '../controller/student.controller.js'
 
 const router = express.Router()
 
-router.post("/create-student",StudentController.createStudent)
+router.post("/create-student", StudentController.createStudentIntoDB)
 
 
-
-export const studentRouters = router
+export const studentRoutes = router
