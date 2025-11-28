@@ -9,5 +9,7 @@ router.get('/students', StudentController.getStudentsFromDB)
 
 router.get('/students/:id', StudentController.getSingleStudentFromDB)
 
+router.patch('/students/:id', StudentController.updateStudentInDB)
+
 
 export const studentRoutes = router

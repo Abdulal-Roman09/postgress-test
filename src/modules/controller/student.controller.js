@@ -54,9 +54,42 @@ const getSingleStudentFromDB = catchAsync(async (req, res) => {
   });
 });
 
+export const updateStudentInDB = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+
+  if (Object.keys(data).length === 0) {
+    sendResponse(res, {
+      success: false,
+      message: 'No fields provided to update',
+      statusCode: 400,
+    });
+    return;
+  }
+
+  const updated = await Student.updateStudent(id, data);
+
+  if (!updated) {
+    sendResponse(res, {
+      success: false,
+      message: 'Student not found or nothing to update',
+      statusCode: 404,
+    });
+    return;
+  }
+
+  sendResponse(res, {
+    success: true,
+    message: 'Student updated',
+    statusCode: 200,
+    data: updated,
+  });
+});
+
 export const StudentController = {
   insertStudentIntoDB,
   getStudentsFromDB,
-  getSingleStudentFromDB
+  getSingleStudentFromDB,
+  updateStudentInDB,
 };
 
