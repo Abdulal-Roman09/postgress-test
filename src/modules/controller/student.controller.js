@@ -2,21 +2,17 @@ import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { Student } from "../model/student.model.js";
 
-export const createStudentIntoDB = catchAsync(async (req, res) => {
+export const insertStudentIntoDB = catchAsync(async (req, res) => {
 
   const { name, email, age, roll } = req.body;
-
-  // Simple validation
+  
   if (!name || !email || !roll) {
 
     throw new Error("data is not provided")
   }
 
-  // Create student (using your model method)
-
   const student = await Student.createStudent({ name, email, age, roll });
 
-  // Send response
   sendResponse(res, {
     success: true,
     message: "Student is created",
@@ -25,11 +21,8 @@ export const createStudentIntoDB = catchAsync(async (req, res) => {
   });
 });
 
-export const StudentController = {
-  createStudentIntoDB
-};
 
-export const getStudentsFromDB = catchAsync(async (req, res) => {
+const getStudentsFromDB = catchAsync(async (req, res) => {
   const students = await Student.getStudents();
 
   sendResponse(res, {
@@ -40,7 +33,7 @@ export const getStudentsFromDB = catchAsync(async (req, res) => {
   });
 });
 
-export const getSingleStudentFromDB = catchAsync(async (req, res) => {
+const getSingleStudentFromDB = catchAsync(async (req, res) => {
   const { id } = req.params;
   const student = await Student.getStudentById(id);
 
@@ -61,6 +54,9 @@ export const getSingleStudentFromDB = catchAsync(async (req, res) => {
   });
 });
 
-// include new handlers in controller export
-StudentController.getStudentsFromDB = getStudentsFromDB;
-StudentController.getSingleStudentFromDB = getSingleStudentFromDB;
+export const StudentController = {
+  insertStudentIntoDB,
+  getStudentsFromDB,
+  getSingleStudentFromDB
+};
+

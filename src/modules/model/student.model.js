@@ -1,6 +1,6 @@
 import dbClient from "../../db/dbConnection.js";
 
-const createStudent = async ({ name, email, age, roll }) => {
+const insertStudent = async ({ name, email, age, roll }) => {
   const query = `
     INSERT INTO students (name, email, age, roll)
     VALUES ($1, $2, $3, $4)
@@ -10,6 +10,7 @@ const createStudent = async ({ name, email, age, roll }) => {
   const { rows } = await dbClient.query(query, values);
   return rows[0];
 };
+
 
 const getStudents = async () => {
   const query = `SELECT * FROM students ORDER BY id ASC`;
@@ -23,8 +24,8 @@ const getStudentById = async (id) => {
   return rows[0];
 };
 
-export const Student={
-    createStudent,
-    getStudents,
-    getStudentById
+export const Student = {
+  insertStudent,
+  getStudents,
+  getStudentById
 }
